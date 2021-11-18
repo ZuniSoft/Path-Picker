@@ -1,0 +1,78 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>Diff</key>
+	<array>
+		<dict>
+			<key>ModifiedContent</key>
+			<string>import Foundation
+import SwiftUI
+import UIKit
+import MobileCoreServices
+import PlaygroundSupport
+
+class Browser : UIViewController, UIDocumentMenuDelegate,UIDocumentPickerDelegate,UINavigationControllerDelegate {
+    var urlField : UITextField!
+    
+    override func loadView() {
+        let view = UIView()
+        view.backgroundColor = .white
+        
+        urlField = UITextField()
+        urlField.borderStyle = .roundedRect
+        urlField.text = ""
+        view.addSubview(urlField)
+        urlField.translatesAutoresizingMaskIntoConstraints = false
+        
+        NSLayoutConstraint.activate([
+            urlField.topAnchor.constraint(equalTo: view.topAnchor, constant: 20),
+            urlField.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 20),
+            urlField.widthAnchor.constraint(equalTo: view.widthAnchor, constant: -40)
+        ])
+        
+        self.view = view
+    }
+
+    func documentPicker(_ controller: UIDocumentPickerViewController, didPickDocumentAt url: URL) {
+        let myURL = url as URL 
+        let tmp = (myURL.path ?? "").isEmpty ? "/" : myURL.path
+        urlField.text = tmp
+        print("import result : \(myURL)")
+    }
+    
+    func documentMenu(_ documentMenu:UIDocumentMenuViewController, didPickDocumentPicker documentPicker: UIDocumentPickerViewController) {
+        documentPicker.delegate = self
+        present(documentPicker, animated: true, completion: nil)
+    }
+    
+    func documentPickerWasCancelled(_ controller: UIDocumentPickerViewController) {
+        print("view was cancelled")
+        dismiss(animated: true, completion: nil)
+    }
+    
+    public func openPicker(){
+        let docMenu = UIDocumentPickerViewController(documentTypes: [String(kUTTypeText)], in: .open)
+        docMenu.delegate = self
+        docMenu.modalPresentationStyle = .formSheet
+        self.present(docMenu, animated: true, completion: nil)
+    }
+} 
+
+let b = Browser()
+let v = PlaygroundPage.current.setLiveView(b)
+b.openPicker()
+
+</string>
+			<key>ModifiedRange</key>
+			<string>{1, 1998}</string>
+			<key>OriginalContent</key>
+			<string></string>
+			<key>OriginalRange</key>
+			<string>{1, 0}</string>
+		</dict>
+	</array>
+	<key>File</key>
+	<string>Chapters/Chapter1.playgroundchapter/Pages/My Playground.playgroundpage/main.swift</string>
+</dict>
+</plist>
